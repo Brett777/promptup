@@ -1,0 +1,9 @@
+{
+  "name": "promptup",
+  "description": "Compile a rough, messy, or underspecified prompt into a precise, codebase-grounded Claude Code prompt — without executing it or editing code. Invoked via /promptup.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Brett Olmstead",
+    "email": "olmsteadbrett@gmail.com"
+  }
+}

@@ -6,14 +6,14 @@
 
 ## Install
 
-From the community marketplace (once published):
+Once accepted into the community marketplace:
 
 ```
 /plugin marketplace add anthropics/claude-plugins-community
 /plugin install promptup@claude-community
 ```
 
-Or test this repo locally:
+Or test this repo locally. Clone it, then in Claude Code:
 
 ```
 /plugin marketplace add /path/to/promptup
@@ -23,10 +23,24 @@ Or test this repo locally:
 ## Usage
 
 ```
-/promptup make teh login thing retry when it fails idk where it is
+/promptup:promptup make teh login thing retry when it fails idk where it is
 ```
 
-You get back a polished, copy-pasteable prompt plus a short note on what changed. Reply `go` to run it, or tell it what to adjust.
+(The command is doubled because plugin skills are namespaced `plugin:skill` — here the plugin and the skill are both `promptup`.)
+
+You get back a polished, ready-to-run prompt plus a short note on what changed:
+
+```
+── Improved prompt ─────────────────────────────
+Add retry logic to the login request in src/auth/login.ts. Wrap the
+fetch in `signIn()` to retry up to 3× on network/5xx errors with
+exponential backoff; do not retry on 401/403. Done when a flaky
+network recovers within 3 attempts and auth failures still surface.
+─────────────────────────────────────────────────
+```
+
+Reply `go` to run it, or tell it what to adjust — the improved prompt is
+already in context, so there's nothing to copy.
 
 ## How it works
 

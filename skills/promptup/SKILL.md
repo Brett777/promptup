@@ -3,7 +3,7 @@ name: promptup
 description: >-
   Compile a rough, messy, misspelled, or underspecified prompt into a precise,
   codebase-grounded prompt for Claude Code — WITHOUT executing it or editing
-  any code. The deliverable is the rewritten prompt itself. Invoked via /promptup.
+  any code. The deliverable is the rewritten prompt itself. Invoked via /promptup:promptup.
 model: sonnet
 effort: medium
 allowed-tools: Read, Grep, Glob, Agent
@@ -27,7 +27,7 @@ urge to "just do it," stop — that defeats the entire purpose of this skill.
 
 ## Input
 
-The rough prompt is the text passed after `/promptup`. If none was given, use
+The rough prompt is the text passed after `/promptup:promptup`. If none was given, use
 the user's most recent message as the rough prompt.
 
 ## Workflow

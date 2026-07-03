@@ -1,14 +1,14 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
-  "name": "promptup",
-  "description": "Compile a rough, messy, or underspecified prompt into a precise, codebase-grounded Claude Code prompt — without executing it or editing code. Invoked via /promptup:promptup.",
+  "name": "sweetprompt",
+  "description": "Compile a rough, messy, or underspecified prompt into a precise, codebase-grounded Claude Code prompt — without executing it or editing code. Invoked via /sweetprompt:sweetprompt.",
   "version": "0.1.0",
   "author": {
     "name": "Brett Olmstead",
     "email": "olmsteadbrett@gmail.com"
   },
-  "homepage": "https://github.com/Brett777/promptup",
-  "repository": "https://github.com/Brett777/promptup",
+  "homepage": "https://github.com/Brett777/sweetprompt",
+  "repository": "https://github.com/Brett777/sweetprompt",
   "license": "MIT",
   "keywords": ["prompt-engineering", "prompt", "productivity", "developer-tools", "prompt-compiler"]
 }

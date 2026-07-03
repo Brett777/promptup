@@ -1,9 +1,9 @@
 ---
-name: promptup
+name: sweetprompt
 description: >-
   Compile a rough, messy, misspelled, or underspecified prompt into a precise,
   codebase-grounded prompt for Claude Code — WITHOUT executing it or editing
-  any code. The deliverable is the rewritten prompt itself. Invoked via /promptup:promptup.
+  any code. The deliverable is the rewritten prompt itself. Invoked via /sweetprompt:sweetprompt.
 model: sonnet
 effort: medium
 allowed-tools: Read, Grep, Glob, Agent
@@ -11,7 +11,7 @@ disable-model-invocation: true
 argument-hint: "[your rough prompt to sharpen]"
 ---
 
-# promptup
+# sweetprompt
 
 Turn the user's rough prompt into an excellent Claude Code prompt. Your output
 is the rewritten prompt itself — you are a prompt compiler, not the executor.
@@ -27,7 +27,7 @@ urge to "just do it," stop — that defeats the entire purpose of this skill.
 
 ## Input
 
-The rough prompt is the text passed after `/promptup:promptup`. If none was given, use
+The rough prompt is the text passed after `/sweetprompt:sweetprompt`. If none was given, use
 the user's most recent message as the rough prompt.
 
 ## Workflow

@@ -1,13 +1,13 @@
 {
-  "name": "promptup-marketplace",
-  "description": "Prompt-engineering tools for Claude Code, starting with promptup.",
+  "name": "sweetprompt-marketplace",
+  "description": "Prompt-engineering tools for Claude Code, starting with sweetprompt.",
   "owner": {
     "name": "Brett Olmstead",
     "email": "olmsteadbrett@gmail.com"
   },
   "plugins": [
     {
-      "name": "promptup",
+      "name": "sweetprompt",
       "source": ".",
       "description": "Compile a rough prompt into a precise, codebase-grounded Claude Code prompt — without executing it."
     }

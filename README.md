@@ -1,12 +1,12 @@
-# promptup
+# sweetprompt
 
 **Compile a rough prompt into a precise, codebase-grounded Claude Code prompt — without executing it.**
 
-`promptup` is a Claude Code skill that turns a rough, half-formed request into a precise, codebase-grounded prompt. You give it your first-draft ask — typos, vagueness, half-thoughts and all — and it reads your real codebase, works out what you actually mean and which files it touches, and returns a clean, specific, file-aware prompt that's ready to run. It never edits code or runs the task — **the rewritten prompt is the deliverable.**
+`sweetprompt` is a Claude Code skill that turns a rough, half-formed request into a precise, codebase-grounded prompt. You give it your first-draft ask — typos, vagueness, half-thoughts and all — and it reads your real codebase, works out what you actually mean and which files it touches, and returns a clean, specific, file-aware prompt that's ready to run. It never edits code or runs the task — **the rewritten prompt is the deliverable.**
 
 ## Why run it first?
 
-A vague prompt makes Claude Code guess — and wrong guesses cost you turns. It hunts for the wrong file, opens with a round of clarifying questions, or confidently builds the wrong thing, and you spend the next few messages steering it back. `promptup` front-loads that work: a few seconds turning your idea into a precise spec so Claude gets it right on the first pass instead of the third.
+A vague prompt makes Claude Code guess — and wrong guesses cost you turns. It hunts for the wrong file, opens with a round of clarifying questions, or confidently builds the wrong thing, and you spend the next few messages steering it back. `sweetprompt` front-loads that work: a few seconds turning your idea into a precise spec so Claude gets it right on the first pass instead of the third.
 
 - **Right files, first try.** It greps your actual code and cites only paths it has verified, so Claude doesn't burn a turn hunting for "the login thing."
 - **No clarifying-question ping-pong.** Ambiguities get resolved up front — or surfaced as explicit assumptions you can confirm — instead of interrupting you mid-task.
@@ -21,23 +21,23 @@ Once accepted into the community marketplace:
 
 ```
 /plugin marketplace add anthropics/claude-plugins-community
-/plugin install promptup@claude-community
+/plugin install sweetprompt@claude-community
 ```
 
 Or test this repo locally. Clone it, then in Claude Code:
 
 ```
-/plugin marketplace add /path/to/promptup
-/plugin install promptup@promptup-marketplace
+/plugin marketplace add /path/to/sweetprompt
+/plugin install sweetprompt@sweetprompt-marketplace
 ```
 
 ## Usage
 
 ```
-/promptup:promptup make teh login thing retry when it fails idk where it is
+/sweetprompt:sweetprompt make teh login thing retry when it fails idk where it is
 ```
 
-(The command is doubled because plugin skills are namespaced `plugin:skill` — here the plugin and the skill are both `promptup`.)
+(The command is doubled because plugin skills are namespaced `plugin:skill` — here the plugin and the skill are both `sweetprompt`.)
 
 You get back a polished, ready-to-run prompt plus a short note on what changed:
 
@@ -57,7 +57,7 @@ already in context, so there's nothing to copy.
 
 - Runs on **Sonnet** at **medium effort** — fast and cheap; reverts to your session model when you run the result, so execution happens on your normal model.
 - **Read-only** (`Read`, `Grep`, `Glob`, `Agent`) — it structurally cannot edit your code.
-- **Explicit invocation only** (`/promptup`) — never auto-triggers, so it won't hijack a prompt you meant to execute.
+- **Explicit invocation only** (`/sweetprompt:sweetprompt`) — never auto-triggers, so it won't hijack a prompt you meant to execute.
 - Grounds file references against your real code and only cites paths it has verified; fans out to read-only `Explore` agents only for large, multi-subsystem repos.
 
 ## License

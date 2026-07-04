@@ -53,12 +53,32 @@ network recovers within 3 attempts and auth failures still surface.
 Reply `go` to run it, or tell it what to adjust — the improved prompt is
 already in context, so there's nothing to copy.
 
+## Examples
+
+Rough in → sharp out, across the kinds of work where a vague prompt costs the most:
+
+- **Avoid an open-ended refactor.** `clean up the auth code it's a mess` → a *bounded* prompt — "extract the duplicated token-refresh logic in `src/auth/*.ts` into one helper; keep public signatures unchanged; don't touch session storage" — so Claude makes one safe, reviewable change instead of a sprawling rewrite you have to unwind.
+- **Land on the right file, first try.** `the export button is broken fix it` → a prompt that names the real handler and the function it calls, with a repro and a "Done when…" line, skipping the turns Claude would otherwise spend hunting.
+- **Keep Claude on a short leash.** `add a null check to getUser, don't change anything else` → a minimal, single-file prompt with a hard out-of-scope guard, so one line doesn't become a three-module refactor.
+- **Match your codebase's conventions.** `add pagination to the users list` → a prompt grounded in the component that renders users today and the existing fetch pattern to mirror, so you don't end up reviewing a mismatched approach.
+- **De-risk a cross-cutting rename.** `rename the User model to Account everywhere` → the verified touchpoints enumerated (model, migrations, imports, serializers), with what *not* to rename flagged.
+- **Turn a messy ticket into a spec.** Paste a rambling issue → goal, files, steps, acceptance criteria, and open assumptions — one clean **prompt → `go`** instead of a back-and-forth.
+
 ## How it works
 
 - Runs on **Sonnet** at **medium effort** — fast and cheap; reverts to your session model when you run the result, so execution happens on your normal model.
 - **Read-only** (`Read`, `Grep`, `Glob`, `Agent`) — it structurally cannot edit your code.
 - **Explicit invocation only** (`/sweetprompt:sweetprompt`) — never auto-triggers, so it won't hijack a prompt you meant to execute.
 - Grounds file references against your real code and only cites paths it has verified; fans out to read-only `Explore` agents only for large, multi-subsystem repos.
+
+## Permissions & safety
+
+SweetPrompt is built to be safe to install and hard to let loose:
+
+- **Read-only by design.** Its tools are `Read`, `Grep`, `Glob`, and `Agent` — and `Agent` is used only to spawn read-only `Explore` subagents. It searches and reads your code; it does not edit files or run shell commands, and producing the rewritten prompt is its terminal action.
+- **No background surface.** No MCP servers, no hooks, no bundled executables, no network calls, no install scripts — it adds ~100 tokens to a session and nothing else.
+- **Explicit invocation only.** It never auto-triggers; it runs only when you type `/sweetprompt:sweetprompt`, so it can't hijack a prompt you meant to execute.
+- **Text is the only output.** The deliverable is the rewritten prompt. Running it is a separate step you initiate, on your normal session model.
 
 ## License
 

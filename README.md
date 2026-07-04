@@ -42,15 +42,18 @@ Or test this repo locally. Clone it, then in Claude Code:
 You get back a polished, ready-to-run prompt plus a short note on what changed:
 
 ```
-── Improved prompt ─────────────────────────────
+──✦  Sweetened Prompt  ────────────────────────────
+
 Add retry logic to the login request in src/auth/login.ts. Wrap the
 fetch in `signIn()` to retry up to 3× on network/5xx errors with
 exponential backoff; do not retry on 401/403. Done when a flaky
 network recovers within 3 attempts and auth failures still surface.
-─────────────────────────────────────────────────
+
+────────────────────────────────────────────────────
+  Grounded ·  src/auth/login.ts — signIn() at :42
 ```
 
-Reply `go` to run it, or tell it what to adjust — the improved prompt is
+Reply `go` to run it, or tell it what to adjust — the Sweetened Prompt is
 already in context, so there's nothing to copy.
 
 ## Examples
@@ -79,6 +82,10 @@ SweetPrompt is built to be safe to install and hard to let loose:
 - **No background surface.** No MCP servers, no hooks, no bundled executables, no network calls, no install scripts — it adds ~100 tokens to a session and nothing else.
 - **Explicit invocation only.** It never auto-triggers; it runs only when you type `/sweetprompt:sweetprompt`, so it can't hijack a prompt you meant to execute.
 - **Text is the only output.** The deliverable is the rewritten prompt. Running it is a separate step you initiate, on your normal session model.
+
+## Privacy
+
+SweetPrompt collects nothing. It has no telemetry or analytics and makes no network calls of its own — it stores nothing and sends nothing to any third party. Like any Claude Code skill, the model running it processes your prompt and the code it reads as part of your normal Claude Code session, under Anthropic's existing [Privacy Policy](https://www.anthropic.com/legal/privacy); SweetPrompt adds no data collection or transmission of its own.
 
 ## License
 

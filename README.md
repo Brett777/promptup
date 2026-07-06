@@ -77,6 +77,25 @@ symbols SweetPrompt actually verified in your code. Wrong file? Say so; any
 adjustment re-emits the complete updated prompt, so the latest block is
 always exactly what `go` will run.
 
+## The deep pass: `/sweetprompt:deep`
+
+The default command is deliberately cheap: pinned to Sonnet at medium effort,
+minimal exploration. When the rewrite itself needs judgment — a sprawling
+refactor, unfamiliar subsystems, a messy ticket that touches several modules —
+use the deep pass instead:
+
+```
+/sweetprompt:deep rename the User model to Account everywhere
+```
+
+Deep compiles the same Sweetened Prompt with more muscle: it runs on **your
+session model** at **high reasoning effort**, grounds more thoroughly (call
+sites, conventions, existing tests), and fans out to read-only `Explore`
+subagents sooner. Same read-only guarantees, same output format, same
+**prompt → `go`** flow — it just thinks harder before writing. It costs what
+your session model costs, so save it for tasks where a shallow rewrite would
+miss real touchpoints; for everyday asks the default pass is the right tool.
+
 ## Examples
 
 Rough in → sharp out, across the kinds of work where a vague prompt costs the most:
@@ -90,9 +109,9 @@ Rough in → sharp out, across the kinds of work where a vague prompt costs the 
 
 ## How it works
 
-- Runs on **Sonnet** at **medium effort**: fast and cheap; reverts to your session model when you run the result, so execution happens on your normal model.
+- Runs on **Sonnet** at **medium effort**: fast and cheap; reverts to your session model when you run the result, so execution happens on your normal model. The optional deep pass (`/sweetprompt:deep`) instead runs on your session model at high effort for tasks that earn it.
 - **Read-only** (`Read`, `Grep`, `Glob`, `Agent`): it structurally cannot edit your code.
-- **Explicit invocation only** (`/sweetprompt:sweetprompt`): never auto-triggers, so it won't hijack a prompt you meant to execute.
+- **Explicit invocation only** (`/sweetprompt:sweetprompt` or `/sweetprompt:deep`): never auto-triggers, so it won't hijack a prompt you meant to execute.
 - Grounds file references against your real code and only cites paths it has verified; fans out to read-only `Explore` agents only for large, multi-subsystem repos.
 
 ## SweetPrompt vs plan mode
@@ -100,7 +119,7 @@ Rough in → sharp out, across the kinds of work where a vague prompt costs the 
 Claude Code's plan mode also explores before acting, so when do you want which?
 
 - **Plan mode** runs on your session model and produces an implementation plan. Reach for it on large, multi-step work where the ***how*** needs review.
-- **SweetPrompt** runs a cheap, fast pass and produces a better *prompt*. Reach for it when what needs review is the ***what***: intent, scope, and target files. It's lighter, and the artifact is portable: paste it into a ticket, share it with a teammate, or run it in a fresh session.
+- **SweetPrompt** runs a cheap, fast pass and produces a better *prompt*. Reach for it when what needs review is the ***what***: intent, scope, and target files. It's lighter, and the artifact is portable: paste it into a ticket, share it with a teammate, or run it in a fresh session. (The deep pass sits between the two: plan-mode-like cost, but the artifact is still a portable prompt, not a plan.)
 
 They compose: sweeten first, then run the result in plan mode for big changes.
 
@@ -115,9 +134,9 @@ Most prompt tools rewrite your **words**: cleaner grammar, tighter structure, a 
 
 SweetPrompt is built to be safe to install and hard to let loose:
 
-- **Read-only by design.** Its tools are `Read`, `Grep`, `Glob`, and `Agent`. `Agent` is used only to spawn read-only `Explore` subagents. It searches and reads your code; it does not edit files or run shell commands, and producing the rewritten prompt is its terminal action.
-- **No background surface.** No MCP servers, no hooks, no bundled executables, no network calls, no install scripts. It adds ~100 tokens to a session and nothing else.
-- **Explicit invocation only.** It never auto-triggers; it runs only when you type `/sweetprompt:sweetprompt`, so it can't hijack a prompt you meant to execute.
+- **Read-only by design.** Both commands share the same tools: `Read`, `Grep`, `Glob`, and `Agent`. `Agent` is used only to spawn read-only `Explore` subagents. It searches and reads your code; it does not edit files or run shell commands, and producing the rewritten prompt is its terminal action.
+- **No background surface.** No MCP servers, no hooks, no bundled executables, no network calls, no install scripts. It adds ~200 tokens to a session (one short description per command) and nothing else.
+- **Explicit invocation only.** It never auto-triggers; it runs only when you type `/sweetprompt:sweetprompt` or `/sweetprompt:deep`, so it can't hijack a prompt you meant to execute.
 - **Text is the only output.** The deliverable is the rewritten prompt. Running it is a separate step you initiate, on your normal session model.
 
 ## Privacy
